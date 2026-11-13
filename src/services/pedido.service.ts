@@ -1,4 +1,5 @@
 import { Pedido } from "../models/pedido";
+import { obtenerUsuarioPorIdService } from "./user.service";
 
 const pedidos: Pedido[] = [];
 
@@ -12,6 +13,33 @@ export const obtenerPedidosPorIdService = ( id:number)=>{
 };
 
 export const crearPedidoService = (nuevoPedido: Pedido)=>{
+    
+    if (nuevoPedido.sabores.length === 0){
+        throw new Error ("Debe seleccionar al menos un sabor");
+    }
+
+    if (nuevoPedido.sabores.length > 4){
+        throw new Error
+    }
+
+    if (nuevoPedido.presentacionId === 1 && nuevoPedido.sabores.length > 2){
+        throw new Error ("1/4 Kg. permite máximo 2 sabores");
+    }
+
+    if (nuevoPedido.presentacionId === 2 && nuevoPedido.sabores.length > 3){
+        throw new Error ("1/2 Kg. permite máximo 3 sabores");
+    }
+
+    if (nuevoPedido.presentacionId === 3 && nuevoPedido.sabores.length > 4){
+        throw new Error ("1 Kg. permite máximo 4 sabores");
+    }
+
+const usuario = obtenerUsuarioPorIdService(nuevoPedido.usuarioId);
+
+if (!usuario){
+    throw new Error("El usuario no existe");
+}
+
     pedidos.push(nuevoPedido);
     return nuevoPedido;
 }
@@ -34,4 +62,7 @@ if (indice === -1){
 }
 return pedidos.splice(indice,1)[0];
 }
+
+
+
  
