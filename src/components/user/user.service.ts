@@ -1,4 +1,4 @@
-import {User} from "../models/user";
+import {User} from "./user.model";
 
 //simulacion de bade de datos en memoria
 const users: User[] = [

@@ -6,7 +6,7 @@ import {
     crearUsuarioService, 
     actualizarUsuarioService, 
     eliminarUsuarioService 
-} from "../services/user.service";
+} from "./user.service";
 
 // obtener todos los usuarios
 export const obtenerUsuarios = (req = request, res = response) => {
