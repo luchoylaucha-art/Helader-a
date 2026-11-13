@@ -6,7 +6,7 @@ import {
     crearPedidoService,
     actualizarPedidoService,
     eliminarPedidoService
-} from "../services/pedido.service";
+} from "./pedido.service";
 
 export const obtenerPedidos = (req: Request, res: Response) => {
     try {

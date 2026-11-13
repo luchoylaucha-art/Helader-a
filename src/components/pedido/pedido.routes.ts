@@ -6,7 +6,7 @@ import{
     crearPedido,
     actualizarPedido,
     eliminarPedido
-} from "../controllers/pedidos.controller";
+} from "./pedido.controller";
 
 const router = Router();
 

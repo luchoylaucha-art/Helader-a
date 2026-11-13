@@ -1,5 +1,5 @@
-import { Pedido } from "../models/pedido";
-import { obtenerUsuarioPorIdService } from "../components/user/user.service";
+import { Pedido } from "./pedido.model";
+import { obtenerUsuarioPorIdService } from "../user/user.service";
 
 const pedidos: Pedido[] = [];
 

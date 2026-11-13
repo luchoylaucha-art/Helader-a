@@ -6,7 +6,7 @@ import presentacionesRoutes from "./routes/presentacion.routes";
 //importar rutas de usuarios
 import userRoutes from "./components/user/user.routes";
 //importar rutas de pedidos
-import pedidosRoutes from "./routes/pedido.routes";
+import pedidosRoutes from "./components/pedido/pedido.routes";
 
 const app = express();
 
