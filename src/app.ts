@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 app.use("/sabores", saboresRoutes);
 app.use("/presentaciones", presentacionesRoutes);
 app.use("/usuarios", userRoutes);
-app.use("./pedidos", pedidosRoutes);
+app.use("/pedidos", pedidosRoutes);
 
 
 

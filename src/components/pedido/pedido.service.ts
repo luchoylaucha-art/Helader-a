@@ -1,67 +1,105 @@
-import { Pedido } from "./pedido.model";
-import { obtenerUsuarioPorIdService } from "../user/user.service";
+import { isValidObjectId } from "mongoose";
+import * as pedidoRepository from "./pedido.repository";
+import * as userRepository from "../user/user.repository";
+import { PRESENTACIONES, ESTADOS, Presentacion, Estado } from "./pedido.model";
 
-const pedidos: Pedido[] = [];
+export class ErrorDeValidacion extends Error {}
 
-export const obtenerTodosLosPedidos = ()=>{
-    return pedidos;
+const MAX_SABORES: Record<Presentacion, number> = {
+    "1/4 kg": 2,
+    "1/2 kg": 3,
+    "1 kg": 4
 };
 
-export const obtenerPedidosPorIdService = ( id:number)=>{
-    return pedidos.find(pedido => pedido.id === id);
-        
+const validarId = (id: string) => {
+    if (!isValidObjectId(id)) {
+        throw new ErrorDeValidacion("El id no es válido");
+    }
 };
 
-export const crearPedidoService = (nuevoPedido: Pedido)=>{
-    
-    if (nuevoPedido.sabores.length === 0){
-        throw new Error ("Debe seleccionar al menos un sabor");
+const validarPresentacion = (presentacion: string) => {
+    if (!(PRESENTACIONES as readonly string[]).includes(presentacion)) {
+        throw new ErrorDeValidacion("La presentación no es válida");
+    }
+};
+
+const validarSabores = (presentacion: Presentacion, sabores: string[]) => {
+    if (!Array.isArray(sabores) || sabores.length === 0) {
+        throw new ErrorDeValidacion("Debe seleccionar al menos un sabor");
+    }
+    if (sabores.length > MAX_SABORES[presentacion]) {
+        throw new ErrorDeValidacion(
+            `${presentacion} permite máximo ${MAX_SABORES[presentacion]} sabores`
+        );
+    }
+    if (new Set(sabores).size !== sabores.length) {
+        throw new ErrorDeValidacion("No se pueden repetir sabores");
+    }
+};
+
+export const obtenerTodosLosPedidos = async () => {
+    return pedidoRepository.buscarTodos();
+};
+
+export const obtenerPedidosPorIdService = async (id: string) => {
+    validarId(id);
+    return pedidoRepository.buscarPorId(id);
+};
+
+export const crearPedidoService = async (datos: {
+    usuario: string;
+    presentacion: Presentacion;
+    sabores: string[];
+}) => {
+    validarId(datos.usuario);
+    validarPresentacion(datos.presentacion);
+    validarSabores(datos.presentacion, datos.sabores);
+
+    const usuario = await userRepository.buscarPorId(datos.usuario);
+    if (!usuario) {
+        throw new ErrorDeValidacion("El usuario no existe");
     }
 
-    if (nuevoPedido.sabores.length > 4){
-        throw new Error
-    }
+    return pedidoRepository.crear({
+        usuario: datos.usuario,
+        presentacion: datos.presentacion,
+        sabores: datos.sabores
+    });
+};
 
-    if (nuevoPedido.presentacionId === 1 && nuevoPedido.sabores.length > 2){
-        throw new Error ("1/4 Kg. permite máximo 2 sabores");
-    }
+export const actualizarPedidoService = async (
+    id: string,
+    datos: { presentacion?: Presentacion; sabores?: string[]; estado?: Estado }
+) => {
+    validarId(id);
 
-    if (nuevoPedido.presentacionId === 2 && nuevoPedido.sabores.length > 3){
-        throw new Error ("1/2 Kg. permite máximo 3 sabores");
-    }
-
-    if (nuevoPedido.presentacionId === 3 && nuevoPedido.sabores.length > 4){
-        throw new Error ("1 Kg. permite máximo 4 sabores");
-    }
-
-const usuario = obtenerUsuarioPorIdService(nuevoPedido.usuarioId);
-
-if (!usuario){
-    throw new Error("El usuario no existe");
-}
-
-    pedidos.push(nuevoPedido);
-    return nuevoPedido;
-}
-
-export const actualizarPedidoService = (id:number, datosActualizados: Partial<Pedido>)=>{
-    const pedido = pedidos.find(p => p.id === id);
-
-    if (!pedido) {
+    const actual = await pedidoRepository.buscarPorId(id);
+    if (!actual) {
         return null;
     }
-    Object.assign(pedido, datosActualizados);
-    return pedido;
+
+    const presentacion = datos.presentacion ?? actual.presentacion;
+    const sabores = datos.sabores ?? actual.sabores;
+    validarPresentacion(presentacion);
+    validarSabores(presentacion, sabores);
+
+    if (datos.estado !== undefined && !(ESTADOS as readonly string[]).includes(datos.estado)) {
+        throw new ErrorDeValidacion("El estado no es válido");
+    }
+
+    const cambios: { presentacion?: Presentacion; sabores?: string[]; estado?: Estado } = {};
+    if (datos.presentacion !== undefined) cambios.presentacion = datos.presentacion;
+    if (datos.sabores !== undefined) cambios.sabores = datos.sabores;
+    if (datos.estado !== undefined) cambios.estado = datos.estado;
+
+    return pedidoRepository.actualizar(id, cambios);
 };
 
-export const eliminarPedidoService = (id:number, )=>{
-    const indice = pedidos.findIndex(p => p.id === id);
+export const eliminarPedidoService = async (id: string) => {
+    validarId(id);
+    return pedidoRepository.eliminar(id);
+};
 
-if (indice === -1){
-    return null;
-}
-return pedidos.splice(indice,1)[0];
-}
 
 
 

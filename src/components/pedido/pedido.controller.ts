@@ -1,97 +1,75 @@
 import { Request, Response } from "express";
-
 import {
     obtenerTodosLosPedidos,
     obtenerPedidosPorIdService,
     crearPedidoService,
     actualizarPedidoService,
-    eliminarPedidoService
+    eliminarPedidoService,
+    ErrorDeValidacion
 } from "./pedido.service";
 
-export const obtenerPedidos = (req: Request, res: Response) => {
+const responderError = (res: Response, error: unknown, mensajeGenerico: string) => {
+    if (error instanceof ErrorDeValidacion) {
+        res.status(400).json({ mensaje: error.message });
+        return;
+    }
+    console.error(error);
+    res.status(500).json({ mensaje: mensajeGenerico });
+};
+
+export const obtenerPedidos = async (req: Request, res: Response) => {
     try {
-        const pedidos = obtenerTodosLosPedidos();
-        res.json({ mensaje: "Lista de pedidos", pedidos });
+        const pedidos = await obtenerTodosLosPedidos();
+        res.status(200).json(pedidos);
     } catch (error) {
-        res.status(500).json({
-            mensaje: "Error al obtener pedidos"
-        });
+        responderError(res, error, "Error al obtener los pedidos");
     }
 };
 
-export const obtenerPedidosPorId = (req: Request, res: Response) => {
+export const obtenerPedidosPorId = async (req: Request, res: Response) => {
     try {
-        const id = Number(req.params.id);
-        const pedido = obtenerPedidosPorIdService(id);
-
+        const pedido = await obtenerPedidosPorIdService(String(req.params.id));
         if (!pedido) {
-            return res.status(404).json({
-                mensaje: "Pedido no encontrado"
-            });
+            res.status(404).json({ mensaje: "Pedido no encontrado" });
+            return;
         }
-
-        res.json(pedido);
+        res.status(200).json(pedido);
     } catch (error) {
-        res.status(500).json({
-            mensaje: "Error al obtener pedido"
-        });
+        responderError(res, error, "Error al obtener el pedido");
     }
 };
 
-export const crearPedido = (req: Request, res: Response) => {
-    try{
-        const pedido = crearPedidoService(req.body);
-        res.status(201).json({
-            mensaje: "Pedido creado",
-            pedido
-        });
-
-    } catch (error) {
-        res.status(400).json({
-            mensaje: "Error al crear pedido"
-        });
-    }
-};
-
-export const actualizarPedido = (req: Request, res: Response)=> {
+export const crearPedido = async (req: Request, res: Response) => {
     try {
-        const id = Number(req.params.id);
-        const pedido = actualizarPedidoService(id, req.body);
-        
-        if (!pedido) {
-            return res.status(404).json({
-                mensaje: "Pedido actualizado",
-                pedido
-            });
-        }
-        res.json({
-            mensaje: "Pedido actualizado",
-            pedido
-        });
-    } catch (error){
-        res.status(400).json({
-            mensaje: "Error al actualizar pedido"
-        });
+        const pedido = await crearPedidoService(req.body);
+        res.status(201).json({ mensaje: "Pedido creado", pedido });
+    } catch (error) {
+        responderError(res, error, "Error al crear el pedido");
     }
 };
 
-export const eliminarPedido = (req: Request, res: Response)=>{
-    try{
-        const id = Number(req.params.id);
-        const pedido = eliminarPedidoService(id);
-
-        if (!pedido){
-            return res.status(404).json({
-                mensaje: "Pedido no encontrado"
-            });
+export const actualizarPedido = async (req: Request, res: Response) => {
+    try {
+        const pedido = await actualizarPedidoService(String(req.params.id), req.body);
+        if (!pedido) {
+            res.status(404).json({ mensaje: "Pedido no encontrado" });
+            return;
         }
-    res.json({
-        mensaje: "Pedido eliminado",
-        pedido});
-
+        res.status(200).json({ mensaje: "Pedido actualizado", pedido });
     } catch (error) {
-        res.status(500).json({
-            mensaje: "Error al eliminar pedido"
-        });
+        responderError(res, error, "Error al actualizar el pedido");
+    }
+};
+
+export const eliminarPedido = async (req: Request, res: Response) => {
+    try {
+        const pedido = await eliminarPedidoService(String(req.params.id));
+        if (!pedido) {
+            res.status(404).json({ mensaje: "Pedido no encontrado" });
+            return;
+        }
+        res.status(200).json({ mensaje: "Pedido eliminado", pedido });
+    } catch (error) {
+        responderError(res, error, "Error al eliminar el pedido");
     }
 };
