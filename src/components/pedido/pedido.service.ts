@@ -3,7 +3,7 @@ import * as pedidoRepository from "./pedido.repository";
 import * as userRepository from "../user/user.repository";
 import { PRESENTACIONES, ESTADOS, Presentacion, Estado } from "./pedido.model";
 
-export class ErrorDeValidacion extends Error {}
+import { ErrorDeValidacion } from "../../utils/errores";
 
 const MAX_SABORES: Record<Presentacion, number> = {
     "1/4 kg": 2,

@@ -4,9 +4,10 @@ import {
     obtenerPedidosPorIdService,
     crearPedidoService,
     actualizarPedidoService,
-    eliminarPedidoService,
-    ErrorDeValidacion
-} from "./pedido.service";
+    eliminarPedidoService
+   } from "./pedido.service";
+
+   import { ErrorDeValidacion } from "../../utils/errores";
 
 const responderError = (res: Response, error: unknown, mensajeGenerico: string) => {
     if (error instanceof ErrorDeValidacion) {
