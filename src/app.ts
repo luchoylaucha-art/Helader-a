@@ -7,6 +7,8 @@ import presentacionesRoutes from "./routes/presentacion.routes";
 import userRoutes from "./components/user/user.routes";
 //importar rutas de pedidos
 import pedidosRoutes from "./components/pedido/pedido.routes";
+//importar rutas de autenticacion
+import authRoutes from "./components/auth/auth.routes";
 
 const app = express();
 
@@ -20,6 +22,7 @@ app.use("/sabores", saboresRoutes);
 app.use("/presentaciones", presentacionesRoutes);
 app.use("/usuarios", userRoutes);
 app.use("/pedidos", pedidosRoutes);
+app.use("/auth", authRoutes);
 
 
 
