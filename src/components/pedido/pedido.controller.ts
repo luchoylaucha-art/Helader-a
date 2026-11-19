@@ -42,8 +42,13 @@ export const obtenerPedidosPorId = async (req: Request, res: Response) => {
 
 export const crearPedido = async (req: Request, res: Response) => {
     try {
-        const pedido = await crearPedidoService(req.body);
+        const pedido = await crearPedidoService({
+    presentacion: req.body?.presentacion,
+    sabores: req.body?.sabores,
+    usuario: res.locals.usuario.id
+});
         res.status(201).json({ mensaje: "Pedido creado", pedido });
+        
     } catch (error) {
         responderError(res, error, "Error al crear el pedido");
     }
