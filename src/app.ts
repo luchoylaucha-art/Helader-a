@@ -3,8 +3,6 @@ import express from "express";
 import saboresRoutes from "./routes/sabor.routes";
 //importar rutas de presentaciones
 import presentacionesRoutes from "./routes/presentacion.routes";
-//importar rutas de usuarios
-import userRoutes from "./components/user/user.routes";
 //importar rutas de pedidos
 import pedidosRoutes from "./components/pedido/pedido.routes";
 //importar rutas de autenticacion
@@ -20,7 +18,6 @@ app.get("/", (req, res) => {
 
 app.use("/sabores", saboresRoutes);
 app.use("/presentaciones", presentacionesRoutes);
-app.use("/usuarios", userRoutes);
 app.use("/pedidos", pedidosRoutes);
 app.use("/auth", authRoutes);
 
