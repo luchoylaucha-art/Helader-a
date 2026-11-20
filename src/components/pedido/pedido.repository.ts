@@ -7,10 +7,11 @@ interface DatosPedido {
     estado?: Estado;
 }
 
-export const buscarTodos = () => PedidoModel.find();
+export const buscarTodos = (filtro: { estado?: Estado }={}) => 
+    PedidoModel.find(filtro);
 
-export const buscarPorUsuario = (usuarioId: string) =>
-    PedidoModel.find({ usuario: usuarioId });
+export const buscarPorUsuario = (usuarioId: string, filtro: {estado?: Estado } = {}) =>
+    PedidoModel.find({ usuario: usuarioId, ...filtro });
 
 export const buscarPorId = (id: string) => PedidoModel.findById(id);
 

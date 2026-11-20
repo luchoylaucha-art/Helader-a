@@ -20,7 +20,8 @@ const responderError = (res: Response, error: unknown, mensajeGenerico: string) 
 
 export const obtenerPedidos = async (req: Request, res: Response) => {
     try {
-        const pedidos = await obtenerTodosLosPedidos(res.locals.usuario);
+        const estado = typeof req.query.estado === "string" ? req.query.estado : undefined;
+const pedidos = await obtenerTodosLosPedidos(res.locals.usuario, { estado });
         res.status(200).json(pedidos);
     } catch (error) {
         responderError(res, error, "Error al obtener los pedidos");

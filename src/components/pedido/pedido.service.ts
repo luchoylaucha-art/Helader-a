@@ -42,11 +42,23 @@ const validarSabores = (presentacion: Presentacion, sabores: string[]) => {
     }
 };
 
-export const obtenerTodosLosPedidos = async (usuario: { id: string; rol: string }) => {
-    if (usuario.rol === "admin") {
-        return pedidoRepository.buscarTodos();
+export const obtenerTodosLosPedidos = async (
+    usuario: UsuarioToken,
+    filtros: { estado?: string } = {}
+) => {
+    const filtro: { estado?: Estado } = {};
+
+    if (filtros.estado !== undefined) {
+        if (!(ESTADOS as readonly string[]).includes(filtros.estado)) {
+            throw new ErrorDeValidacion("El estado no es válido");
+        }
+        filtro.estado = filtros.estado as Estado;
     }
-    return pedidoRepository.buscarPorUsuario(usuario.id);
+
+    if (usuario.rol === "admin") {
+        return pedidoRepository.buscarTodos(filtro);
+    }
+    return pedidoRepository.buscarPorUsuario(usuario.id, filtro);
 };
 
 export const obtenerPedidosPorIdService = async (id: string, usuario: UsuarioToken) => {
