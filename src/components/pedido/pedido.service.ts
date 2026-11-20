@@ -37,8 +37,11 @@ const validarSabores = (presentacion: Presentacion, sabores: string[]) => {
     }
 };
 
-export const obtenerTodosLosPedidos = async () => {
-    return pedidoRepository.buscarTodos();
+export const obtenerTodosLosPedidos = async (usuario: { id: string; rol: string }) => {
+    if (usuario.rol === "admin") {
+        return pedidoRepository.buscarTodos();
+    }
+    return pedidoRepository.buscarPorUsuario(usuario.id);
 };
 
 export const obtenerPedidosPorIdService = async (id: string) => {

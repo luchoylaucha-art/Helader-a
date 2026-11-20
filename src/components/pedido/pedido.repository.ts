@@ -9,6 +9,9 @@ interface DatosPedido {
 
 export const buscarTodos = () => PedidoModel.find();
 
+export const buscarPorUsuario = (usuarioId: string) =>
+    PedidoModel.find({ usuario: usuarioId });
+
 export const buscarPorId = (id: string) => PedidoModel.findById(id);
 
 export const crear = (datos: DatosPedido) => PedidoModel.create(datos);

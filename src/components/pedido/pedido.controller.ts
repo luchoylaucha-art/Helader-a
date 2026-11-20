@@ -20,7 +20,7 @@ const responderError = (res: Response, error: unknown, mensajeGenerico: string) 
 
 export const obtenerPedidos = async (req: Request, res: Response) => {
     try {
-        const pedidos = await obtenerTodosLosPedidos();
+        const pedidos = await obtenerTodosLosPedidos(res.locals.usuario);
         res.status(200).json(pedidos);
     } catch (error) {
         responderError(res, error, "Error al obtener los pedidos");
