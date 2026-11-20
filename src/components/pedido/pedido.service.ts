@@ -11,6 +11,11 @@ const MAX_SABORES: Record<Presentacion, number> = {
     "1 kg": 4
 };
 
+type UsuarioToken = { id: string; rol: string };
+
+const puedeAcceder = (pedido: { usuario: unknown }, usuario: UsuarioToken) =>
+    usuario.rol === "admin" || String(pedido.usuario) === usuario.id;
+
 const validarId = (id: string) => {
     if (!isValidObjectId(id)) {
         throw new ErrorDeValidacion("El id no es válido");
@@ -44,9 +49,13 @@ export const obtenerTodosLosPedidos = async (usuario: { id: string; rol: string 
     return pedidoRepository.buscarPorUsuario(usuario.id);
 };
 
-export const obtenerPedidosPorIdService = async (id: string) => {
+export const obtenerPedidosPorIdService = async (id: string, usuario: UsuarioToken) => {
     validarId(id);
-    return pedidoRepository.buscarPorId(id);
+    const pedido = await pedidoRepository.buscarPorId(id);
+    if (!pedido || !puedeAcceder(pedido, usuario)) {
+        return null;
+    }
+    return pedido;
 };
 
 export const crearPedidoService = async (datos: {
@@ -72,12 +81,12 @@ export const crearPedidoService = async (datos: {
 
 export const actualizarPedidoService = async (
     id: string,
-    datos: { presentacion?: Presentacion; sabores?: string[]; estado?: Estado }
+    datos: { presentacion?: Presentacion; sabores?: string[]; estado?: Estado }, usuario: UsuarioToken
 ) => {
     validarId(id);
 
     const actual = await pedidoRepository.buscarPorId(id);
-    if (!actual) {
+    if (!actual || !puedeAcceder(actual, usuario)) {
         return null;
     }
 

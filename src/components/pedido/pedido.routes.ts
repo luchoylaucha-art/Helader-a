@@ -12,7 +12,7 @@ import { soloAdmin } from "../../middlewares/roles.middleware";
 const router = Router();
 
 router.get("/", verificarToken, obtenerPedidos);
-router.get("/:id", obtenerPedidosPorId);
+router.get("/:id", verificarToken,obtenerPedidosPorId);
 router.post("/", verificarToken, crearPedido);
 router.put("/:id", verificarToken, actualizarPedido);
 router.delete("/:id", verificarToken, soloAdmin, eliminarPedido);

@@ -29,7 +29,7 @@ export const obtenerPedidos = async (req: Request, res: Response) => {
 
 export const obtenerPedidosPorId = async (req: Request, res: Response) => {
     try {
-        const pedido = await obtenerPedidosPorIdService(String(req.params.id));
+        const pedido = await obtenerPedidosPorIdService(String(req.params.id), res.locals.usuario);
         if (!pedido) {
             res.status(404).json({ mensaje: "Pedido no encontrado" });
             return;
@@ -56,7 +56,7 @@ export const crearPedido = async (req: Request, res: Response) => {
 
 export const actualizarPedido = async (req: Request, res: Response) => {
     try {
-        const pedido = await actualizarPedidoService(String(req.params.id), req.body);
+        const pedido = await actualizarPedidoService(String(req.params.id), req.body, res.locals.usuario);
         if (!pedido) {
             res.status(404).json({ mensaje: "Pedido no encontrado" });
             return;
