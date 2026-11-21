@@ -1,0 +1,325 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "API Heladeria",
+    "collectionId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+    "dateExported": "2026-11-21T13:15:51.129Z",
+    "version": "1.4",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "163bcba2-d7af-438c-8248-aff0720422b3",
+            "colId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+            "containerId": "",
+            "name": "01-Registro (201)",
+            "url": "http://localhost:3000/auth/registro",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2026-11-21T12:35:58.548Z",
+            "modified": "2026-11-21T12:35:58.548Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": [
+                    "{",
+                    "  \"nombre\": \"Cliente Demo\",",
+                    "  \"email\": \"cliente@prueba.com\",",
+                    "  \"password\": \"123456\"",
+                    "}"
+                ],
+                "form": []
+            }
+        },
+        {
+            "_id": "6eb8912e-7f41-4579-9a6b-bcecb29c920a",
+            "colId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+            "containerId": "",
+            "name": "02-Registro con email repetido (400)",
+            "url": "http://localhost:3000/auth/registro",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2026-11-21T12:39:52.313Z",
+            "modified": "2026-11-21T12:39:52.313Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": [
+                    "{",
+                    "  \"nombre\": \"Cliente Demo\",",
+                    "  \"email\": \"cliente@prueba.com\",",
+                    "  \"password\": \"123456\"",
+                    "}"
+                ],
+                "form": []
+            }
+        },
+        {
+            "_id": "ae365d5b-9537-4225-86ca-8c722440faaa",
+            "colId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+            "containerId": "",
+            "name": "03-Login (200)",
+            "url": "http://localhost:3000/auth/login",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2026-11-21T12:41:54.296Z",
+            "modified": "2026-11-21T12:41:54.296Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": [
+                    "{",
+                    "  \"email\": \"cliente@prueba.com\",",
+                    "  \"password\": \"123456\"",
+                    "}"
+                ],
+                "form": []
+            }
+        },
+        {
+            "_id": "80951166-0a75-4096-a751-eaf703caee6e",
+            "colId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+            "containerId": "",
+            "name": "04-Login con contraseña incorrecta (401)",
+            "url": "http://localhost:3000/auth/login",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2026-11-21T12:44:19.926Z",
+            "modified": "2026-11-21T12:44:19.926Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": [
+                    "{",
+                    "  \"email\": \"cliente@prueba.com\",",
+                    "  \"password\": \"contraseña-mal\"",
+                    "}"
+                ],
+                "form": []
+            }
+        },
+        {
+            "_id": "1bbe3c24-ad1a-4cf4-a1ea-acbe53f3d97c",
+            "colId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+            "containerId": "",
+            "name": "05-Crear pedido (201)",
+            "url": "http://localhost:3000/pedidos",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2026-11-21T12:46:19.703Z",
+            "modified": "2026-11-21T12:46:19.703Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": [
+                    "{",
+                    "  \"presentacion\": \"1/2 kg\",",
+                    "  \"sabores\": [\"Vainilla\", \"Chocolate\"]",
+                    "}"
+                ],
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiMDE5MGE1NjIzNzRhNTMwNjdiNTJkNyIsInJvbCI6InVzZXIiLCJpYXQiOjE3OTUyNjQ5NjUsImV4cCI6MTc5NTI2ODU2NX0.0ltl1BqmDRKM-9hLVaVpivZ-6TMttQ_awRLDIVfr2Qk"
+            }
+        },
+        {
+            "_id": "65080832-906a-4bb5-91de-9882b66efc6f",
+            "colId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+            "containerId": "",
+            "name": "06-Crear pedido sin token (401)",
+            "url": "http://localhost:3000/pedidos",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2026-11-21T12:49:16.027Z",
+            "modified": "2026-11-21T12:49:16.027Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": [
+                    "{",
+                    "  \"presentacion\": \"1/2 kg\",",
+                    "  \"sabores\": [\"Vainilla\", \"Chocolate\"]",
+                    "}"
+                ],
+                "form": []
+            }
+        },
+        {
+            "_id": "e8f71731-3411-4ca8-984f-1bdc5e71e599",
+            "colId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+            "containerId": "",
+            "name": "07-Crear pedido inválido (400)",
+            "url": "http://localhost:3000/pedidos",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2026-11-21T12:50:58.153Z",
+            "modified": "2026-11-21T12:50:58.153Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": [
+                    "{",
+                    "  \"presentacion\": \"1/4 kg\",",
+                    "  \"sabores\": [\"Vainilla\", \"Chocolate\", \"Frutilla\"]",
+                    "}"
+                ],
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiMDE5MGE1NjIzNzRhNTMwNjdiNTJkNyIsInJvbCI6InVzZXIiLCJpYXQiOjE3OTUyNjQ5NjUsImV4cCI6MTc5NTI2ODU2NX0.0ltl1BqmDRKM-9hLVaVpivZ-6TMttQ_awRLDIVfr2Qk"
+            }
+        },
+        {
+            "_id": "ee0e6447-7160-42d1-a6ac-62f8581728b7",
+            "colId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+            "containerId": "",
+            "name": "08-Listar pedidos (200)",
+            "url": "http://localhost:3000/pedidos",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2026-11-21T12:53:05.134Z",
+            "modified": "2026-11-21T12:53:05.134Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiMDE5MGE1NjIzNzRhNTMwNjdiNTJkNyIsInJvbCI6InVzZXIiLCJpYXQiOjE3OTUyNjQ5NjUsImV4cCI6MTc5NTI2ODU2NX0.0ltl1BqmDRKM-9hLVaVpivZ-6TMttQ_awRLDIVfr2Qk"
+            }
+        },
+        {
+            "_id": "3359bf14-6941-4dee-997a-b44bc2d20e4c",
+            "colId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+            "containerId": "",
+            "name": "09-Listar con filtro de estado (200)",
+            "url": "http://localhost:3000/pedidos?estado=Pendiente",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2026-11-21T12:56:01.348Z",
+            "modified": "2026-11-21T12:56:01.348Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "estado",
+                    "value": "Pendiente",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiMDE5MGE1NjIzNzRhNTMwNjdiNTJkNyIsInJvbCI6InVzZXIiLCJpYXQiOjE3OTUyNjQ5NjUsImV4cCI6MTc5NTI2ODU2NX0.0ltl1BqmDRKM-9hLVaVpivZ-6TMttQ_awRLDIVfr2Qk"
+            }
+        },
+        {
+            "_id": "2f061698-382e-4e3e-8ca2-fa3acbff3280",
+            "colId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+            "containerId": "",
+            "name": "10-Obtener pedido por id (200)",
+            "url": "http://localhost:3000/pedidos/6b0192ec62374a53067b52d8",
+            "method": "GET",
+            "sortNum": 100000,
+            "created": "2026-11-21T12:57:35.914Z",
+            "modified": "2026-11-21T12:57:35.914Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiMDE5MGE1NjIzNzRhNTMwNjdiNTJkNyIsInJvbCI6InVzZXIiLCJpYXQiOjE3OTUyNjQ5NjUsImV4cCI6MTc5NTI2ODU2NX0.0ltl1BqmDRKM-9hLVaVpivZ-6TMttQ_awRLDIVfr2Qk"
+            }
+        },
+        {
+            "_id": "5f306e0b-3759-430b-8db2-866d1c5dbbbe",
+            "colId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+            "containerId": "",
+            "name": "11-Obtener pedido que no existe (404)",
+            "url": "http://localhost:3000/pedidos/000000000000000000000000",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2026-11-21T13:00:57.992Z",
+            "modified": "2026-11-21T13:00:57.992Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiMDE5MGE1NjIzNzRhNTMwNjdiNTJkNyIsInJvbCI6InVzZXIiLCJpYXQiOjE3OTUyNjQ5NjUsImV4cCI6MTc5NTI2ODU2NX0.0ltl1BqmDRKM-9hLVaVpivZ-6TMttQ_awRLDIVfr2Qk"
+            }
+        },
+        {
+            "_id": "18647e11-4c2c-476b-a192-adf87f2f8710",
+            "colId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+            "containerId": "",
+            "name": "12-Modificar pedido (200)",
+            "url": "http://localhost:3000/pedidos/6b0192ec62374a53067b52d8",
+            "method": "PUT",
+            "sortNum": 120000,
+            "created": "2026-11-21T13:02:19.629Z",
+            "modified": "2026-11-21T13:02:19.629Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": [
+                    "{",
+                    "  \"estado\": \"Preparado\"",
+                    "}"
+                ],
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiMDE5MGE1NjIzNzRhNTMwNjdiNTJkNyIsInJvbCI6InVzZXIiLCJpYXQiOjE3OTUyNjQ5NjUsImV4cCI6MTc5NTI2ODU2NX0.0ltl1BqmDRKM-9hLVaVpivZ-6TMttQ_awRLDIVfr2Qk"
+            }
+        },
+        {
+            "_id": "603bf875-82c7-4235-93a8-74dc2c192edc",
+            "colId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+            "containerId": "",
+            "name": "13-Eliminar como cliente comun (403)",
+            "url": "http://localhost:3000/pedidos/6b0192ec62374a53067b52d8",
+            "method": "DELETE",
+            "sortNum": 130000,
+            "created": "2026-11-21T13:05:54.791Z",
+            "modified": "2026-11-21T13:05:54.791Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiMDE5MGE1NjIzNzRhNTMwNjdiNTJkNyIsInJvbCI6InVzZXIiLCJpYXQiOjE3OTUyNjQ5NjUsImV4cCI6MTc5NTI2ODU2NX0.0ltl1BqmDRKM-9hLVaVpivZ-6TMttQ_awRLDIVfr2Qk"
+            }
+        },
+        {
+            "_id": "44c770f1-0d67-4dba-9ecd-b9ab3622b0df",
+            "colId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+            "containerId": "",
+            "name": "03b-Login admin (200)",
+            "url": "http://localhost:3000/auth/login",
+            "method": "POST",
+            "sortNum": 150000,
+            "created": "2026-11-21T13:09:02.043Z",
+            "modified": "2026-11-21T13:09:02.044Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": [
+                    "{",
+                    "  \"email\": \"admin@prueba.com\",",
+                    "  \"password\": \"123456\"",
+                    "}"
+                ],
+                "form": []
+            }
+        },
+        {
+            "_id": "091dc851-9ff9-4744-9543-f86b60cd6c74",
+            "colId": "4b1f0cc0-8d10-4de0-addb-1298de15a219",
+            "containerId": "",
+            "name": "14-Eliminar como admin (200)",
+            "url": "http://localhost:3000/pedidos/6aff8b24f27729dd3aabfedb",
+            "method": "DELETE",
+            "sortNum": 160000,
+            "created": "2026-11-21T13:11:32.502Z",
+            "modified": "2026-11-21T13:11:32.502Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZmU1OTExNjBhMWY0ZDcxY2Y2NjExNyIsInJvbCI6ImFkbWluIiwiaWF0IjoxNzk1MjY2NTcwLCJleHAiOjE3OTUyNzAxNzB9.hmYLrfpfQtVAG6rIi9Q-Qvbw7mHor6BwiccHxUV862M"
+            }
+        }
+    ],
+    "ref": "7oEvpMNCCdCoOU4rzdgZa9_WgKcOQ8rae7ylPw4T3XJbbZhmBT0e0jIaKJaafe6eWYS0TuRlyyjZI1n04-7ddw"
+}
